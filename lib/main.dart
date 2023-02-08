@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Startup Name Generator',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         ),
         home: MyHomePage(),
       ),
@@ -42,16 +42,18 @@ class MyHomePage extends StatelessWidget {
     var pair = state.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('Your startup idea:'),
-          BigCard(pair: pair),
-          ElevatedButton(
-              onPressed: () {
-                state.getNextWord();
-              },
-              child: Text("Next!"))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BigCard(pair: pair),
+            ElevatedButton(
+                onPressed: () {
+                  state.getNextWord();
+                },
+                child: Text("Next!"))
+          ],
+        ),
       ),
     );
   }
@@ -67,9 +69,19 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Text(pair.asLowerCase),
+    var theme = Theme.of(context);
+    var textStyle = theme.textTheme.displayMedium!
+        .copyWith(color: theme.colorScheme.onPrimary);
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Text(
+          pair.asLowerCase,
+          style: textStyle,
+          semanticsLabel: pair.asPascalCase,
+        ),
+      ),
     );
   }
 }
