@@ -39,12 +39,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = context.watch<MyAppState>();
+    var pair = state.current;
 
     return Scaffold(
       body: Column(
         children: [
           Text('Your startup idea:'),
-          Text(state.current.asLowerCase),
+          BigCard(pair: pair),
           ElevatedButton(
               onPressed: () {
                 state.getNextWord();
@@ -52,6 +53,23 @@ class MyHomePage extends StatelessWidget {
               child: Text("Next!"))
         ],
       ),
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Text(pair.asLowerCase),
     );
   }
 }
